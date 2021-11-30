@@ -6,7 +6,7 @@ Store and retrieve public-facing object IDs and URIs for accession numbers deriv
 
 The package provides an adjacent service to the `sfomuseum/accession-numbers` package whereby public-facing object IDs and URLs for individual online object records can be derived from an accession number. Many online collections allow you to search for an accession number but do not allow an object (web page) to be retrieved using only an accession number. This package provides services to store and retrieve the public object ID associated with an accession number.
 
-_This is work in progress. Although the basic scaffolding is complete things may still change, specifically whether and how this package can be updated to use the [data defintion files](https://github.com/sfomuseum/accession-numbers/tree/main/data) in the `sfomuseum/accession-numbers` package.._
+_This is work in progress. Although the basic scaffolding is complete things may still change, specifically whether and how this package can be updated to use the [data defintion files](https://github.com/sfomuseum/accession-numbers/tree/main/data) in the `sfomuseum/accession-numbers` package.
 
 ## Documentation
 
