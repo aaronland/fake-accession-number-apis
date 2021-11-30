@@ -28,7 +28,18 @@ go build -mod vendor -o bin/server cmd/server/main.go
 Here is how you would import object IDs and accession numbers from the National Gallery of Art's (NGA) [opendata release](https://github.com/NationalGalleryOfArt/opendata):
 
 ```
-$> bin/import -database-uri 'sql://sqlite3?dsn=accessionumbers.db' -source-uri nga:// /usr/local/data/nga/opendata/data/objects.csv
+$> bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri nga:// \
+	/usr/local/data/nga/opendata/data/objects.csv
+
+# Time passes...
+
+$> sqlite3 accessionumbers.db 
+SQLite version 3.36.0 2021-06-18 18:58:49
+Enter ".help" for usage hints.
+sqlite> SELECT COUNT(object_id) FROM accession_numbers;
+136612
 ```
 
 ### Looking up an accession number (from the command line)
@@ -36,7 +47,11 @@ $> bin/import -database-uri 'sql://sqlite3?dsn=accessionumbers.db' -source-uri n
 Here is how you would look up the corresponding object ID, in the NGA's collection, for the accession number `1994.59.10`:
 
 ```
-$> bin/lookup -database-uri 'sql://sqlite3?dsn=accessionumbers.db' -source-uri nga:// 1994.59.10
+$> bin/lookup \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri nga:// \
+	1994.59.10
+	
 89682
 ```
 
