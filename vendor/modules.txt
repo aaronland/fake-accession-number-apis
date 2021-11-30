@@ -1,3 +1,6 @@
 # github.com/bwmarrin/snowflake v0.3.0
 ## explicit
 github.com/bwmarrin/snowflake
+# github.com/sfomuseum/go-csvdict v1.0.0
+## explicit
+github.com/sfomuseum/go-csvdict
