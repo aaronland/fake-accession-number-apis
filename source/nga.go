@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-const NGA_ORGANIZATION_URI string = "https://www.nga.gov/"
+const NGA_ORGANIZATION_SCHEME string = "nga"
 
 type NGASource struct {
 	Source
@@ -19,7 +19,7 @@ type NGASource struct {
 
 func init() {
 	ctx := context.Background()
-	RegisterSource(ctx, "nga", NewNGASource)
+	RegisterSource(ctx, NGA_ORGANIZATION_SCHEME, NewNGASource)
 }
 
 func NewNGASource(ctx context.Context, uri string) (Source, error) {
@@ -82,10 +82,12 @@ func (s *NGASource) importURI(ctx context.Context, db database.AccessionNumberDa
 			return fmt.Errorf("Row is missing accessionnum column")
 		}
 
+		org_uri := fmt.Sprintf("%s://", NGA_ORGANIZATION_SCHEME)
+
 		a := &database.AccessionNumber{
 			AccessionNumber: accession_number,
 			ObjectId:        object_id,
-			OrganizationURI: NGA_ORGANIZATION_URI, // update to use https://github.com/sfomuseum/accession-numbers/blob/main/data/nga.gov.json
+			OrganizationURI: org_uri, // update to use https://github.com/sfomuseum/accession-numbers/blob/main/data/nga.gov.json
 		}
 
 		err = db.AddAccessionNumber(ctx, a)
