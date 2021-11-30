@@ -5,6 +5,7 @@ import (
 	"flag"
 	"github.com/aaronland/fake-accession-number-apis/database"
 	"github.com/aaronland/fake-accession-number-apis/source"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
 
@@ -23,7 +24,7 @@ func main() {
 		log.Fatalf("Failed to create database, %v", err)
 	}
 
-	src, err := source.NewSource(ctx, *database_uri)
+	src, err := source.NewSource(ctx, *source_uri)
 
 	if err != nil {
 		log.Fatalf("Failed to create database, %v", err)
@@ -31,7 +32,7 @@ func main() {
 
 	sources := flag.Args()
 
-	err = src.Import(ctx, sources...)
+	err = src.Import(ctx, db, sources...)
 
 	if err != nil {
 		log.Fatalf("Failed to import, %v", err)

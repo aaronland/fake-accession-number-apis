@@ -1,5 +1,5 @@
-CREATE TABLE accession_numbers (accession_number TEXT, object_id TEXT, organization_id INTEGER);
-CREATE UNIQUE INDEX by_accession_number on accession_numbers (accession_number, object_id, organization_id);
+CREATE TABLE IF NOT EXISTS accession_numbers (accession_number TEXT, object_id TEXT, organization_id INTEGER);
+CREATE UNIQUE INDEX IF NOT EXISTS by_accession_number on accession_numbers (accession_number, object_id, organization_id);
 
-CREATE TABLE organizations (organization_uri TEXT, organization_id INTEGER);
-CREATE UNIQUE INDEX by_organization on organizations (organization_uri);
+CREATE TABLE IF NOT EXISTS organizations (organization_uri TEXT, organization_id INTEGER);
+CREATE UNIQUE INDEX IF NOT EXISTS by_organization on organizations (organization_uri);

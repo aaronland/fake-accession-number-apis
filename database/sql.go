@@ -13,7 +13,13 @@ var schema string
 
 type SQLAccessionNumberDatabase struct {
 	AccessionNumberDatabase
-	conn *sql.DB
+	conn   *sql.DB
+	engine string
+}
+
+func init() {
+	ctx := context.Background()
+	RegisterDatabase(ctx, "sql", NewSQLAccessionNumberDatabase)
 }
 
 func NewSQLAccessionNumberDatabase(ctx context.Context, uri string) (AccessionNumberDatabase, error) {
@@ -41,8 +47,35 @@ func NewSQLAccessionNumberDatabase(ctx context.Context, uri string) (AccessionNu
 		return nil, fmt.Errorf("Failed to ping database server, %w", err)
 	}
 
+	_, err = conn.ExecContext(ctx, schema)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create database tables, %w", err)
+	}
+
+	if engine == "sqlite3" {
+
+		pragma := []string{
+			"PRAGMA JOURNAL_MODE=OFF",
+			"PRAGMA SYNCHRONOUS=OFF",
+			"PRAGMA LOCKING_MODE=EXCLUSIVE",
+			"PRAGMA PAGE_SIZE=4096",
+			"PRAGMA CACHE_SIZE=1000000",
+		}
+
+		for _, p := range pragma {
+
+			_, err = conn.ExecContext(ctx, p)
+
+			if err != nil {
+				return nil, fmt.Errorf("Failed to register pragma '%s', %w", p, err)
+			}
+		}
+	}
+
 	db := &SQLAccessionNumberDatabase{
-		conn: conn,
+		conn:   conn,
+		engine: engine,
 	}
 
 	return db, nil
@@ -122,9 +155,9 @@ func (db *SQLAccessionNumberDatabase) AddAccessionNumber(ctx context.Context, ac
 		}
 	}
 
-	q := "INSERT INTO accession_numbers (accession_number, object_id, organization_id) VALUES(?, ?, ?)"
+	q := "REPLACE INTO accession_numbers (accession_number, object_id, organization_id) VALUES(?, ?, ?)"
 
-	_, err = db.conn.ExecContext(ctx, q, org_id, acc.AccessionNumber)
+	_, err = db.conn.ExecContext(ctx, q, acc.AccessionNumber, acc.ObjectId, org_id)
 
 	if err != nil {
 		return fmt.Errorf("Failed to create accession number, %w", err)
@@ -171,7 +204,7 @@ func (db *SQLAccessionNumberDatabase) createOrganization(ctx context.Context, or
 
 	org_id := NewOrganizationId()
 
-	q := "INSERT INTO organization (organization_uri, organization_id) VALUES(?, ?)"
+	q := "INSERT INTO organizations (organization_uri, organization_id) VALUES(?, ?)"
 
 	_, err := db.conn.ExecContext(ctx, q, org, org_id)
 

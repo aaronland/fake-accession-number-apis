@@ -17,6 +17,11 @@ type NGASource struct {
 	Source
 }
 
+func init() {
+	ctx := context.Background()
+	RegisterSource(ctx, "nga", NewNGASource)
+}
+
 func NewNGASource(ctx context.Context, uri string) (Source, error) {
 
 	s := &NGASource{}
