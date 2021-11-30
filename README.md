@@ -40,6 +40,8 @@ $> bin/lookup -database-uri 'sql://sqlite3?dsn=accessionumbers.db' -source-uri n
 89682
 ```
 
+As in: https://www.nga.gov/collection/art-object-page.89682.html
+
 ### Looking up an accession number (via an HTTP API)
 
 First start the `server` tool:
