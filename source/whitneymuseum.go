@@ -6,15 +6,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/aaronland/fake-accession-number-apis/database"
+	"github.com/jtacoma/uritemplates"
 	"github.com/sfomuseum/go-csvdict"
 	"io"
 	"os"
 )
 
 const WHITNEYMUSEUM_ORGANIZATION_SCHEME string = "whitneymuseum"
+const WHITNEYMUSEUM_OBJECT_TEMPLATE = "https://whitney.org/collection/works/{objectid}"
 
 type WhitneyMuseumSource struct {
 	Source
+	object_template *uritemplates.UriTemplate
 }
 
 func init() {
@@ -24,7 +27,16 @@ func init() {
 
 func NewWhitneyMuseumSource(ctx context.Context, uri string) (Source, error) {
 
-	s := &WhitneyMuseumSource{}
+	t, err := uritemplates.Parse(WHITNEYMUSEUM_OBJECT_TEMPLATE)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse object template, %w", err)
+	}
+
+	s := &WhitneyMuseumSource{
+		object_template: t,
+	}
+
 	return s, nil
 }
 
@@ -40,6 +52,15 @@ func (s *WhitneyMuseumSource) Import(ctx context.Context, db database.AccessionN
 	}
 
 	return nil
+}
+
+func (s *WhitneyMuseumSource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+
+	values := map[string]interface{}{
+		"objectid": acc.ObjectId,
+	}
+
+	return s.object_template.Expand(values)
 }
 
 func (s *WhitneyMuseumSource) importURI(ctx context.Context, db database.AccessionNumberDatabase, u string) error {

@@ -16,6 +16,9 @@ github.com/aws/aws-lambda-go/lambdacontext
 # github.com/bwmarrin/snowflake v0.3.0
 ## explicit
 github.com/bwmarrin/snowflake
+# github.com/jtacoma/uritemplates v1.0.0
+## explicit
+github.com/jtacoma/uritemplates
 # github.com/mattn/go-sqlite3 v1.14.9
 ## explicit
 github.com/mattn/go-sqlite3

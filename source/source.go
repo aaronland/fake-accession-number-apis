@@ -12,6 +12,7 @@ import (
 
 type Source interface {
 	Import(context.Context, database.AccessionNumberDatabase, ...string) error
+	ObjectURI(context.Context, database.AccessionNumber) (string, error)
 }
 
 type SourceInitializeFunc func(ctx context.Context, uri string) (Source, error)

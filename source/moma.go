@@ -6,15 +6,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/aaronland/fake-accession-number-apis/database"
+	"github.com/jtacoma/uritemplates"
 	"github.com/sfomuseum/go-csvdict"
 	"io"
 	"os"
 )
 
 const MOMA_ORGANIZATION_SCHEME string = "moma"
+const MOMA_OBJECT_TEMPLATE string = "https://www.moma.org/collection/works/{objectid}"
 
 type MoMASource struct {
 	Source
+	object_template *uritemplates.UriTemplate
 }
 
 func init() {
@@ -24,7 +27,16 @@ func init() {
 
 func NewMoMASource(ctx context.Context, uri string) (Source, error) {
 
-	s := &MoMASource{}
+	t, err := uritemplates.Parse(MOMA_OBJECT_TEMPLATE)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse object template, %w", err)
+	}
+
+	s := &MoMASource{
+		object_template: t,
+	}
+
 	return s, nil
 }
 
@@ -40,6 +52,15 @@ func (s *MoMASource) Import(ctx context.Context, db database.AccessionNumberData
 	}
 
 	return nil
+}
+
+func (s *MoMASource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+
+	values := map[string]interface{}{
+		"objectid": acc.ObjectId,
+	}
+
+	return s.object_template.Expand(values)
 }
 
 func (s *MoMASource) importURI(ctx context.Context, db database.AccessionNumberDatabase, u string) error {

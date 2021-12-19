@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/aaronland/fake-accession-number-apis/database"
+	"github.com/jtacoma/uritemplates"
 	"github.com/sfomuseum/go-csvdict"
 	"io"
 	"net/url"
@@ -14,10 +15,12 @@ import (
 )
 
 const METMUSEUM_ORGANIZATION_SCHEME string = "metmuseum"
+const METMUSEUM_OBJECT_TEMPLATE string = "http://www.metmuseum.org/art/collection/search/{objectid}"
 
 type MetMuseumSource struct {
 	Source
-	remove_bom bool
+	remove_bom      bool
+	object_template *uritemplates.UriTemplate
 }
 
 func init() {
@@ -53,8 +56,15 @@ func NewMetMuseumSource(ctx context.Context, uri string) (Source, error) {
 		remove_bom = remove
 	}
 
+	t, err := uritemplates.Parse(METMUSEUM_OBJECT_TEMPLATE)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse object template, %w", err)
+	}
+
 	s := &MetMuseumSource{
-		remove_bom: remove_bom,
+		remove_bom:      remove_bom,
+		object_template: t,
 	}
 
 	return s, nil
@@ -72,6 +82,15 @@ func (s *MetMuseumSource) Import(ctx context.Context, db database.AccessionNumbe
 	}
 
 	return nil
+}
+
+func (s *MetMuseumSource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+
+	values := map[string]interface{}{
+		"objectid": acc.ObjectId,
+	}
+
+	return s.object_template.Expand(values)
 }
 
 func (s *MetMuseumSource) importURI(ctx context.Context, db database.AccessionNumberDatabase, u string) error {
