@@ -54,7 +54,7 @@ func (s *WhitneyMuseumSource) Import(ctx context.Context, db database.AccessionN
 	return nil
 }
 
-func (s *WhitneyMuseumSource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+func (s *WhitneyMuseumSource) ObjectURI(ctx context.Context, acc *database.AccessionNumber) (string, error) {
 
 	values := map[string]interface{}{
 		"objectid": acc.ObjectId,

@@ -84,7 +84,7 @@ func (s *MetMuseumSource) Import(ctx context.Context, db database.AccessionNumbe
 	return nil
 }
 
-func (s *MetMuseumSource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+func (s *MetMuseumSource) ObjectURI(ctx context.Context, acc *database.AccessionNumber) (string, error) {
 
 	values := map[string]interface{}{
 		"objectid": acc.ObjectId,

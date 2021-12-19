@@ -6,7 +6,7 @@ Store and retrieve public-facing object IDs and URIs for accession numbers deriv
 
 The package provides an adjacent service to the `sfomuseum/accession-numbers` package whereby public-facing object IDs and URLs for individual online object records can be derived from an accession number. Many online collections allow you to search for an accession number but do not allow an object (web page) to be retrieved using only an accession number. This package provides services to store and retrieve the public object ID associated with an accession number.
 
-_This is work in progress. Although the basic scaffolding is complete things may still change, specifically whether and how this package can be updated to use the [data defintion files](https://github.com/sfomuseum/accession-numbers/tree/main/data) in the `sfomuseum/accession-numbers` package.
+_This is work in progress. Although the basic scaffolding is complete things may still change, specifically whether and how this package can be updated to use the [data defintion files](https://github.com/sfomuseum/accession-numbers/tree/main/data) in the `sfomuseum/accession-numbers` package._
 
 ## Documentation
 
@@ -76,19 +76,17 @@ $> curl -s 'http://localhost:8080/?source-uri=nga://&accession-number=1994.59.10
   "organization_uri": "nga://"
 }
 ```
+#### Automatic redirects
 
-#### Future work
-
-The `server` tool should be updated to allow for automatic redirects. For example, it should be possible to query for:
-
-```
-$> curl 'http://localhost:8080/redirect/?source-uri=nga://&accession-number=1994.59.10'
-```
-
-And have the server issue a redirect to:
+It is also possible to have the server automatically redirect a matching accession number to its institution-specific object URL. For example this request for accession number `2017.59` in the Whitney Museum of American Art collection will issue an HTTP redirect pointing to the webpage for Paul Mpagi Sepuya's [Self-Portrait Study with Roses at Night](https://whitney.org/collection/works/55448).
 
 ```
-https://www.nga.gov/collection/art-object-page.89682.html
+$> curl -s -I 'http://localhost:8080/redirect?source-uri=whitneymuseum://&accession-number=2017.59'
+
+HTTP/1.1 302 Found
+Content-Type: text/html; charset=utf-8
+Location: https://whitney.org/collection/works/55448
+Date: Sun, 19 Dec 2021 21:41:19 GMT
 ```
 
 ## Models

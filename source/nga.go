@@ -54,7 +54,7 @@ func (s *NGASource) Import(ctx context.Context, db database.AccessionNumberDatab
 	return nil
 }
 
-func (s *NGASource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+func (s *NGASource) ObjectURI(ctx context.Context, acc *database.AccessionNumber) (string, error) {
 
 	values := map[string]interface{}{
 		"objectid": acc.ObjectId,

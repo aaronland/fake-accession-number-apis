@@ -35,6 +35,16 @@ func main() {
 		log.Fatalf("Failed to create database, %v", err)
 	}
 
+	mux := http.NewServeMux()
+	
+	redirect_handler, err := api.NewRedirectHandler(db)
+
+	if err != nil {
+		log.Fatalf("Failed to create new redirect handler, %v", err)
+	}
+
+	mux.Handle("/redirect/", redirect_handler)
+	
 	lookup_handler, err := api.NewLookupHandler(db)
 
 	if err != nil {
@@ -43,7 +53,6 @@ func main() {
 
 	lookup_handler = cors.Default().Handler(lookup_handler)
 
-	mux := http.NewServeMux()
 	mux.Handle("/", lookup_handler)
 
 	s, err := server.NewServer(ctx, *server_uri)

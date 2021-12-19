@@ -54,7 +54,7 @@ func (s *MoMASource) Import(ctx context.Context, db database.AccessionNumberData
 	return nil
 }
 
-func (s *MoMASource) ObjectURI(ctx context.Context, acc database.AccessionNumber) (string, error) {
+func (s *MoMASource) ObjectURI(ctx context.Context, acc *database.AccessionNumber) (string, error) {
 
 	values := map[string]interface{}{
 		"objectid": acc.ObjectId,
