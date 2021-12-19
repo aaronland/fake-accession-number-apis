@@ -112,6 +112,7 @@ The following data sources are supported:
 ### Metropolitan Museum of Art (metmuseum://)
 
 * [source/metmuseum.go](source/metmuseum.go)
+* https://github.com/metmuseum/openaccess
 
 For example:
 
@@ -129,6 +130,7 @@ Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file co
 For example:
 
 * [source/moma.go](source/moma.go)
+* https://github.com/MuseumofModernArt/collection
 
 ```
 $> ./bin/import \
@@ -140,6 +142,7 @@ $> ./bin/import \
 ### National Gallery of Art (nga://)
 
 * [source/nga.go](source/nga.go)
+* https://github.com/NationalGalleryOfArt/opendata
 
 ```
 $> ./bin/import \
@@ -151,6 +154,7 @@ $> ./bin/import \
 ### Whitney Museum of American Art
 
 * [source/whitneymuseum.go](source/whitneymuseum.go)
+* https://github.com/whitneymuseum/open-access
 
 For example:
 
