@@ -77,6 +77,20 @@ $> curl -s 'http://localhost:8080/?source-uri=nga://&accession-number=1994.59.10
 }
 ```
 
+#### Future work
+
+The `server` tool should be updated to allow for automatic redirects. For example, it should be possible to query for:
+
+```
+$> curl 'http://localhost:8080/redirect/?source-uri=nga://&accession-number=1994.59.10'
+```
+
+And have the server issue a redirect to:
+
+```
+https://www.nga.gov/collection/art-object-page.89682.html
+```
+
 ## Models
 
 ### Databases
@@ -109,6 +123,19 @@ $> ./bin/import \
 ```
 
 Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file contains a leading [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark) (BOM). In order to account for this you will need to explicitly pass a `?remove_bom=1` parameter when defining a `metmuseum://` source URI. The hope is that eventually the BOM will be removed from the published data making the flag unnecessary.
+
+### Museum of Modern Art (moma://)
+
+For example:
+
+* [source/moma.go](source/moma.go)
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri 'moma://' \
+	/usr/local/data/collection/Artworks.csv
+```
 
 ### National Gallery of Art (nga://)
 

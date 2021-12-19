@@ -8,8 +8,8 @@ import (
 	"github.com/aaronland/fake-accession-number-apis/database"
 	"github.com/sfomuseum/go-csvdict"
 	"io"
-	"os"
 	"net/url"
+	"os"
 	"strconv"
 )
 
@@ -37,13 +37,13 @@ func NewMetMuseumSource(ctx context.Context, uri string) (Source, error) {
 
 	// As of December, 2021 Metmuseum openaccess CSV contains a BOM
 	// so we need to strip it in order to read column names correctly
-	
+
 	str_remove := q.Get("remove_bom")
 
 	var remove_bom bool
-	
+
 	if str_remove != "" {
-		
+
 		remove, err := strconv.ParseBool(str_remove)
 
 		if err != nil {
@@ -52,11 +52,11 @@ func NewMetMuseumSource(ctx context.Context, uri string) (Source, error) {
 
 		remove_bom = remove
 	}
-	
+
 	s := &MetMuseumSource{
 		remove_bom: remove_bom,
 	}
-	
+
 	return s, nil
 }
 
@@ -85,11 +85,11 @@ func (s *MetMuseumSource) importURI(ctx context.Context, db database.AccessionNu
 	defer fh.Close()
 
 	// See notes above
-	
+
 	if s.remove_bom {
 		fh.Seek(3, 0)
 	}
-	
+
 	csv_r, err := csvdict.NewReader(fh)
 
 	if err != nil {
