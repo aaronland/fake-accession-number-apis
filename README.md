@@ -78,7 +78,9 @@ $> curl -s 'http://localhost:8080/?source-uri=nga://&accession-number=1994.59.10
 ```
 #### Automatic redirects
 
-It is also possible to have the server automatically redirect a matching accession number to its institution-specific object URL. For example this request for accession number `2017.59` in the Whitney Museum of American Art collection will issue an HTTP redirect pointing to the webpage for Paul Mpagi Sepuya's [Self-Portrait Study with Roses at Night](https://whitney.org/collection/works/55448).
+It is also possible to have the server automatically redirect a matching accession number to its institution-specific object URL.
+
+For example this request for accession number `2017.59` in the Whitney Museum of American Art collection will issue an HTTP redirect pointing to the webpage for Paul Mpagi Sepuya's [Self-Portrait Study with Roses at Night](https://whitney.org/collection/works/55448).
 
 ```
 $> curl -s -I 'http://localhost:8080/redirect?source-uri=whitneymuseum://&accession-number=2017.59'
