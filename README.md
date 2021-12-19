@@ -95,13 +95,13 @@ Date: Sun, 19 Dec 2021 21:41:19 GMT
 
 ### Databases
 
-There is an common interface for storing accession number data, defined in the [database/database.go](database/database.go) file.
+There is a common interface for storing accession number data, defined in the [database/database.go](database/database.go) file.
 
 As of this writing there is a implementation of that interface for any package that supports the `database/sql` interface although only the `mattn/go-sqlite3` package is imported in the code.
 
 ### Sources
 
-There is an common interface for accession number data sources, defined in the [source/source.go](source/source.go) file.
+There is a common interface for accession number data sources, defined in the [source/source.go](source/source.go) file.
 
 As of this writing the schemes and URIs used to define sources are different from those defined in the [sfomuseum/accession-numbers schema](https://github.com/sfomuseum/accession-numbers/blob/main/schema/definition.schema.json). These should be reconciled, if possible.
 
