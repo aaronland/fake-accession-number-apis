@@ -83,7 +83,7 @@ It is also possible to have the server automatically redirect a matching accessi
 For example this request for accession number `2017.59` in the Whitney Museum of American Art collection will issue an HTTP redirect pointing to the webpage for Paul Mpagi Sepuya's [Self-Portrait Study with Roses at Night](https://whitney.org/collection/works/55448).
 
 ```
-$> curl -s -I 'http://localhost:8080/redirect?source-uri=whitneymuseum://&accession-number=2017.59'
+$> curl -s -I 'http://localhost:8080/redirect/?source-uri=whitneymuseum://&accession-number=2017.59'
 
 HTTP/1.1 302 Found
 Content-Type: text/html; charset=utf-8
