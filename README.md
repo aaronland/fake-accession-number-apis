@@ -95,7 +95,20 @@ As of this writing the schemes and URIs used to define sources are different fro
 
 The following data sources are supported:
 
-### National Gallery of Art
+### Metropolitan Museum of Art (metmuseum://)
+
+* [source/metmuseum.go](source/metmuseum.go)
+
+Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file contains a leading [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark) (BOM). In order to account for this you will need to explicitly pass a `?remove_bom=1` parameter when defining a `metmuseum://` source URI. The hope is that eventually the BOM will be removed from the published data making the flag unnecessary.
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri 'metmuseum://?remove_bom=1' \
+	/usr/local/data/openaccess/MetObjects.csv
+```
+
+### National Gallery of Art (nga://)
 
 * [source/nga.go](source/nga.go)
 
