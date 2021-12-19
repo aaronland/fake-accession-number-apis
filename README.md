@@ -99,7 +99,7 @@ The following data sources are supported:
 
 * [source/metmuseum.go](source/metmuseum.go)
 
-Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file contains a leading [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark) (BOM). In order to account for this you will need to explicitly pass a `?remove_bom=1` parameter when defining a `metmuseum://` source URI. The hope is that eventually the BOM will be removed from the published data making the flag unnecessary.
+For example:
 
 ```
 $> ./bin/import \
@@ -108,9 +108,31 @@ $> ./bin/import \
 	/usr/local/data/openaccess/MetObjects.csv
 ```
 
+Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file contains a leading [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark) (BOM). In order to account for this you will need to explicitly pass a `?remove_bom=1` parameter when defining a `metmuseum://` source URI. The hope is that eventually the BOM will be removed from the published data making the flag unnecessary.
+
 ### National Gallery of Art (nga://)
 
 * [source/nga.go](source/nga.go)
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri 'nga://' \
+	/usr/local/data/opendata/data/objects.csv
+```
+
+### Whitney Museum of American Art
+
+* [source/whitneymuseum.go](source/whitneymuseum.go)
+
+For example:
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri 'whitneymuseum://' \
+	/usr/local/data/open-access/artworks.csv
+```
 
 ## See also
 
