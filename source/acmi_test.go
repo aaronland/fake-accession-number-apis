@@ -6,22 +6,22 @@ import (
 	"testing"
 )
 
-func TestNGAImport(t *testing.T) {
+func TestACMIImport(t *testing.T) {
 	t.Skip()
 }
 
-func TestNGAObjectId(t *testing.T) {
+func TestACMIObjectId(t *testing.T) {
 
 	ctx := context.Background()
 
-	s, err := NewSource(ctx, "nga://")
+	s, err := NewSource(ctx, "acmi://")
 
 	if err != nil {
-		t.Fatalf("Failed to create new nga:// source, %v", err)
+		t.Fatalf("Failed to create new acmi:// source, %v", err)
 	}
 
 	tests := map[string]string{
-		"89682": "https://www.nga.gov/collection/art-object-page.89682.html",
+		"116498": "https://www.acmi.net.au/works/116498/",
 	}
 
 	for id, expected_uri := range tests {

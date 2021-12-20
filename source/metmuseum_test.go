@@ -2,25 +2,25 @@ package source
 
 import (
 	"context"
+	"github.com/aaronland/fake-accession-number-apis/database"
 	"testing"
-	"github.com/aaronland/fake-accession-number-apis/database"	
 )
 
-func TestMetMuseumImport(t *testing.T){
+func TestMetMuseumImport(t *testing.T) {
 	t.Skip()
 }
 
 func TestMetMuseumObjectId(t *testing.T) {
 
 	ctx := context.Background()
-	
+
 	s, err := NewSource(ctx, "metmuseum://")
 
 	if err != nil {
 		t.Fatalf("Failed to create new metmuseum:// source, %v", err)
 	}
 
-	tests := map[string]string {
+	tests := map[string]string{
 		"5": "http://www.metmuseum.org/art/collection/search/5",
 	}
 

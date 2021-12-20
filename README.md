@@ -109,12 +109,39 @@ As of this writing the schemes and URIs used to define sources are different fro
 
 The following data sources are supported:
 
+### ACMI (acmi://)
+
+* https://github.com/ACMILabs/acmi-api
+* [source/acmi.go](source/acmi.go)
+
+#### Importing data
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri 'acmi://' \
+	/usr/local/data/acmi-api/app/tsv/works.tsv
+```
+
+Note: This package uses the `tsv/works.tsv` data file which _appears_ to have some encoding issues so not all records are able to be imported at this time.
+
+#### Resolving object URLs
+
+```
+$> curl -s -I 'http://localhost:8080/redirect/?source-uri=acmi://&accession-number=X001564'
+
+HTTP/1.1 302 Found
+Content-Type: text/html; charset=utf-8
+Location: https://www.acmi.net.au/works/116498/
+Date: Mon, 20 Dec 2021 01:36:29 GMT
+```
+
 ### Metropolitan Museum of Art (metmuseum://)
 
 * https://github.com/metmuseum/openaccess
 * [source/metmuseum.go](source/metmuseum.go)
 
-For example:
+#### Importing data
 
 ```
 $> ./bin/import \
@@ -132,6 +159,8 @@ For example:
 * https://github.com/MuseumofModernArt/collection
 * [source/moma.go](source/moma.go)
 
+#### Importing data
+
 ```
 $> ./bin/import \
 	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
@@ -143,6 +172,8 @@ $> ./bin/import \
 
 * https://github.com/NationalGalleryOfArt/opendata
 * [source/nga.go](source/nga.go)
+
+#### Importing data
 
 ```
 $> ./bin/import \
@@ -156,7 +187,7 @@ $> ./bin/import \
 * https://github.com/whitneymuseum/open-access
 * [source/whitneymuseum.go](source/whitneymuseum.go)
 
-For example:
+#### Importing data
 
 ```
 $> ./bin/import \

@@ -2,25 +2,25 @@ package source
 
 import (
 	"context"
+	"github.com/aaronland/fake-accession-number-apis/database"
 	"testing"
-	"github.com/aaronland/fake-accession-number-apis/database"	
 )
 
-func TestWhitneyMuseumImport(t *testing.T){
+func TestWhitneyMuseumImport(t *testing.T) {
 	t.Skip()
 }
 
 func TestWhitneyMuseumObjectId(t *testing.T) {
 
 	ctx := context.Background()
-	
+
 	s, err := NewSource(ctx, "whitneymuseum://")
 
 	if err != nil {
 		t.Fatalf("Failed to create new whitneymuseum:// source, %v", err)
 	}
 
-	tests := map[string]string {
+	tests := map[string]string{
 		"55448": "https://whitney.org/collection/works/55448",
 	}
 

@@ -2,25 +2,25 @@ package source
 
 import (
 	"context"
+	"github.com/aaronland/fake-accession-number-apis/database"
 	"testing"
-	"github.com/aaronland/fake-accession-number-apis/database"	
 )
 
-func TestMoMAImport(t *testing.T){
+func TestMoMAImport(t *testing.T) {
 	t.Skip()
 }
 
 func TestMoMAObjectId(t *testing.T) {
 
 	ctx := context.Background()
-	
+
 	s, err := NewSource(ctx, "moma://")
 
 	if err != nil {
 		t.Fatalf("Failed to create new moma:// source, %v", err)
 	}
 
-	tests := map[string]string {
+	tests := map[string]string{
 		"5": "https://www.moma.org/collection/works/5",
 	}
 

@@ -36,7 +36,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	
+
 	redirect_handler, err := api.NewRedirectHandler(db)
 
 	if err != nil {
@@ -44,7 +44,7 @@ func main() {
 	}
 
 	mux.Handle("/redirect/", redirect_handler)
-	
+
 	lookup_handler, err := api.NewLookupHandler(db)
 
 	if err != nil {
