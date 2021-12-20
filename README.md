@@ -152,9 +152,32 @@ $> ./bin/import \
 
 Note: As of December, 2021 the Metropolitan Museum of Art openaccess CSV file contains a leading [byte order mark](https://en.wikipedia.org/wiki/Byte_order_mark) (BOM). In order to account for this you will need to explicitly pass a `?remove_bom=1` parameter when defining a `metmuseum://` source URI. The hope is that eventually the BOM will be removed from the published data making the flag unnecessary.
 
-### Museum of Modern Art (moma://)
+### Minneapolis Institute of Art (artsmia://)
 
-For example:
+* https://github.com/artsmia/collection
+* [source/artmia.go](source/artsmia.go)
+
+#### Importing data
+
+```
+./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri artsmia:// \
+	/usr/local/data/collection/objects/
+```
+
+#### Resolving object URLs
+
+```
+$> curl -s -I 'http://localhost:8080/redirect/?source-uri=artsmia://&accession-number=85.34'
+
+HTTP/1.1 302 Found
+Content-Type: text/html; charset=utf-8
+Location: https://collections.artsmia.org/art/3344/
+Date: Mon, 20 Dec 2021 06:56:23 GMT
+```
+
+### Museum of Modern Art (moma://)
 
 * https://github.com/MuseumofModernArt/collection
 * [source/moma.go](source/moma.go)
