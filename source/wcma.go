@@ -4,6 +4,7 @@ package source
 
 import (
 	"context"
+	_ "encoding/json"
 	"fmt"
 	"github.com/aaronland/fake-accession-number-apis/database"
 	"github.com/jtacoma/uritemplates"
@@ -72,6 +73,19 @@ func (s *WCMASource) importURI(ctx context.Context, db database.AccessionNumberD
 	}
 
 	defer fh.Close()
+
+	/*
+		var collection []map[string]string
+
+		dec := json.NewDecoder(fh)
+		err = dec.Decode(&collection)
+
+		if err != nil {
+			return fmt.Errorf("Failed to decode '%s', %w", u, err)
+		}
+
+		for _, row := range collection {
+	*/
 
 	csv_r, err := csvdict.NewReader(fh)
 
