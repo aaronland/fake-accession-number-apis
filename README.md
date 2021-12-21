@@ -136,6 +136,32 @@ Location: https://www.acmi.net.au/works/116498/
 Date: Mon, 20 Dec 2021 01:36:29 GMT
 ```
 
+### Art Institute of Chicago (artic://)
+
+* https://github.com/art-institute-of-chicago/api-data
+* https://artic-api-data.s3.amazonaws.com/artic-api-data.tar.bz2
+* [source/artic.go](source/artic.go)
+
+#### Importing data
+
+```
+$> ./bin/import \
+	-database-uri 'sql://sqlite3?dsn=accessionumbers.db' \
+	-source-uri artic:// \
+	/usr/local/data/artic-api-data/json/artworks/
+```
+
+#### Resolving object URLs
+
+```
+$> curl -s -I 'http://localhost:8080/redirect/?source-uri=artic://&accession-number=1982.2072'
+
+HTTP/1.1 302 Found
+Content-Type: text/html; charset=utf-8
+Location: https://www.artic.edu/artworks/99990/
+Date: Tue, 21 Dec 2021 06:43:08 GMT
+```
+
 ### Metropolitan Museum of Art (metmuseum://)
 
 * https://github.com/metmuseum/openaccess
